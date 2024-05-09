@@ -1,0 +1,105 @@
+ git reset --hard / PASSAR A LIMPA EM TUDO E VOLTAR PRO ULTIMO COMMIT
+git merge/ usar pra combinar unificar uma branch na main, ou seja, trazer as mudanças feitas numa branch pro main do repositório, é só dar um switch para branch main e em seguida usar o "git merge + NOMEDABRANCH"
+git merge --abort cancela o merge com conflito
+
+PARA APAGAR
+
+apagar branch do github(repositório remoto)
+git push --delete origin NOMEDABRANCH
+
+apagar branch local
+git branch -d NOMEDABRANCH
+
+TAGS
+
+git tag NOMEDATAG/cria uma tag com o nome específico(a descrição será a mensagem do último commit
+
+git tag -a -m "DESCRIÇÃO DA TAG" NOMEDATAG/ cria uma tag annotated, ou seja, uma tag com descrição que além disso armazena o horário de criação e seu autor
+
+git tag -n listando as tags e suas descrições
+
+git tag lista todas as tags 
+
+para criar uma tag num commmit antigo, basta passar o código do commit no final do comando
+
+git push origin NOMEDATAG/para enviar uma tag ao repositório
+
+git push --tags / envia todas as tags
+
+para deletar
+(localmente)git tag -d NOMEDATAG
+(da nuvem)git push --delete origin NOMEDATAG
+
+STASH
+
+git stash serve pra salvar mudanças ainda não terminadas sem usar commit
+
+git stash/salva a alteração no stash
+
+git stash apply/continua a alteração
+
+git stash apply stash@{NUMERODASTASH} qquando houver mais de uma stash
+
+git stash pop stash@{NUMERODASTASH} (aplico o stash e já retiro ele da lista)
+git stash drop (passando a posição deleta o stash específico, sem posição deleta o stash mais recente)
+
+git stash list / mostra todos os stash
+
+REVERSÃO 
+git revert HEAD
+deu merda num commit, usar o revert HEAD, ele vai criar um novo commit onde toda as merdas foram desfeitas
+
+desfazer um commit
+git reset --hard HEAD~numerodecommitsapagados
+apaga o commit e volta a como estava antes
+
+git reset --mixed HEAD~numero de commits 
+desfaz o commit mas as alterações do código continuam
+git reset -soft  HEAD~1
+desfaz o commit mas deixa todos os arquivos adicionados pro commit
+
+git push --force 
+isso aqui GARANTE que o que tiver no meu computador vai subir pro github, sendo COLADO em cimad e tudo que tá na nuvem
+
+git push --force-with-lease
+vai sobrescrever o código somente se nenhuma alteração der conflito
+
+
+git rebase
+
+por que usar rebase? quando a gente cria uma branch e posteriormente é feita uma atualização no main, ao fim da branch é realizado um merge entre a versão mais atual do "main" e da branch criada, e isso é péssimo nos termos de control
+sendo assim, o rebase se encarrega de adicionar o "main" na linha de desenvolvimento da branch
+
+entrar na branch de desenvolvimento, usar um "git rebase main" pra rebasear a branch na nova main, e logo após pode-se voltar ao main(usando um checkout) e realizar por fim o merge da branch, sendo assim git merge NOMEDABRANCH
+
+caso haja um conflito durante o rebase(duas versões diferentes da mesma linha na branch/main)
+existe a opção de desfazer o rebase com git rebase --abort
+depois de resolver o conflito, é só usar um git rebase --continue
+
+git pull -rebase
+puxa do servidor a versão do projeto, e se houverem novas alterações todas serão aplicadas sem que o código feito seja perdido, e sem a existencia de um merge
+serve para quando 2 pessoas estão desenvolvendo na mesma branch de uma vez só
+
+git fetch origin develop
+
+nesse comando, estou pegando do servidor uma branch específica, desconsiderando tudo que fiz
+usado no momento em que 2 pessoas trabalharam na mesma branch alterando o histórico e começou uma bagunça 
+
+cherry-pick pega um commit específico da branch 
+
+git bisect pra fazer debug
+
+fetch serve pra trazer as coisas do servidor remoto 
+
+git config --global alias.X XPTO substitui o uso do comando XPTO por X, assim sendo, antes o que era GIT XPTO se torna GIT X
+para o caso de comandos que tem espaço, basta colocar o comando entre aspas ex:
+git config --global alias.log 'log --oneline'
+
+git config --global --unset alias.x
+esse comando disassociará o atalho X de XPTO
+
+grep
+filtro para nome de branchs, exemplo
+git branch | grep FILTRAGEM
+filtrará todas as branchs com "FILTRAGEM"
+pode ser usado em commits também
